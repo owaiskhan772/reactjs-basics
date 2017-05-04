@@ -9,6 +9,7 @@ export class Home extends React.Component {
       homeLink: props.initialLinkName
     };
 
+    //after 2 seconds status is changed to 1
     setTimeout(() => {
       this.setState({
         status: 1
