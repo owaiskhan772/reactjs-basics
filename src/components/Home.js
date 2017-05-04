@@ -4,9 +4,48 @@ export class Home extends React.Component {
   constructor(props) {
     super();
     this.state = {
+      status: 0,
       age: props.initialAge,
       homeLink: props.initialLinkName
     };
+
+    //after 2 seconds status is changed to 1
+    setTimeout(() => {
+      this.setState({
+        status: 1
+      });
+    },2000);
+    console.log("Home component constructor called.");
+  }
+
+  //Demonastration of Component Lifecycle
+  componentWillMount() {
+    console.log("componentWillMount called: immediately before initial rendering.");
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount called: immediately after initial rendering.");
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps called: when component receive new props", nextProps);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("shouldComponentUpdate called: before rendering, after receiving new props or state", nextProps, nextState);
+    return true; //return false to prevent rendering!
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log("componentWillUpdate called: before rendering, after receiving new props or state", nextProps, nextState);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate called: after component's updates are flushed to DOM", prevProps, prevState);
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount called: immediately before removing component from DOM");
   }
 
   onChangeLink() {
