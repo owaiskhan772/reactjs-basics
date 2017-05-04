@@ -8,7 +8,8 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			homeLink: "Home"
+			homeLink: "Home",
+			homeMounted: true
 		};
 	}
 
@@ -22,11 +23,33 @@ class App extends Component {
 			alert("Hello! This function is passed from parent component(App) to child component(Home)");
 	}
 
+	onChangeHomeMounted() {
+		this.setState({
+			homeMounted: !this.state.homeMounted
+		});
+	}
+
   render() {
 		let user = {
-			name: "John Doe",
+			name: "Owais Khan",
 			hobbies: ["Sports", "Computer Games", "Cooking", "Programming"]
 		};
+
+		let homeComp = "";
+		if(this.state.homeMounted)
+		{
+			homeComp = <Home
+										name={"Owais"}
+										initialAge={26}
+										user={user}
+										greet={this.onGreet}
+										changeLink={this.onChangeLinkName.bind(this)}
+										initialLinkName={this.state.homeLink}
+								>
+								<p>This paragraph is passed as children from main component and will be accessed as "this.props.children"</p>
+								</Home>;
+		}
+
     return (
       <div className="container">
 				<div className="row">
@@ -37,18 +60,16 @@ class App extends Component {
 
 				<div className="row">
 					<div className="col-xs-10 col-xs-offset-1">
-						<Home
-							name={"Owais"}
-							initialAge={26}
-							user={user}
-							greet={this.onGreet}
-							changeLink={this.onChangeLinkName.bind(this)}
-							initialLinkName={this.state.homeLink}
-						>
-							<p>This paragraph is passed as children from main component and will be accessed as "this.props.children"</p>
-						</Home>
+						{homeComp}
 					</div>
 				</div>
+
+				<div className="row">
+					<div className="col-xs-10 col-xs-offset-1">
+						<button onClick={this.onChangeHomeMounted.bind(this)} className="btn btn-primary">(Un)Mount Home Component</button>
+					</div>
+				</div>
+
       </div>
     );
   }
